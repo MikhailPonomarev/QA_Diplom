@@ -28,6 +28,7 @@ class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
 
     @Step
     fun enterLogin(login: String) {
+        loginInput.waitForExists(10000)
         loginInput.text = login
     }
 
@@ -60,10 +61,10 @@ class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
     }
 
     @Step
-    fun signIn(login: String, pass: String): MainScreen {
+    fun signIn(login: String, pass: String): MainSection {
         enterLogin(login)
         enterPass(pass)
         clickSignInBtn()
-        return MainScreen(this.device)
+        return MainSection(this.device)
     }
 }

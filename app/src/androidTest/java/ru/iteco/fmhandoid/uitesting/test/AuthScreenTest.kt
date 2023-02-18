@@ -2,7 +2,7 @@ package ru.iteco.fmhandoid.uitesting.test
 
 import org.junit.Before
 import org.junit.Test
-import ru.iteco.fmhandoid.uitesting.Constants
+import ru.iteco.fmhandoid.uitesting.testdata.Constants
 import ru.iteco.fmhandoid.uitesting.screens.AuthScreen
 
 class AuthScreenTest : BaseTest() {

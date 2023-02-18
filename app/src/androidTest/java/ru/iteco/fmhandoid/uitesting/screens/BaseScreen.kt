@@ -2,10 +2,10 @@ package ru.iteco.fmhandoid.uitesting.screens
 
 import androidx.test.uiautomator.*
 import io.qameta.allure.kotlin.Step
-import ru.iteco.fmhandoid.uitesting.Constants
+import ru.iteco.fmhandoid.uitesting.testdata.Constants
 
-abstract class BaseScreen(private val device: UiDevice) {
-    private val baseId = "${Constants.PACKAGE}:id/"
+open class BaseScreen(private val device: UiDevice) {
+    protected val baseId = "${Constants.PACKAGE}:id/"
 
     fun find(by: BySelector): UiObject2 = device.findObject(by)
 
@@ -19,49 +19,35 @@ abstract class BaseScreen(private val device: UiDevice) {
 
     fun findByText(text: String): UiObject = device.findObject(UiSelector().text(text))
 
-    //AppBar //TODO: ?nested class?
+    //AppBar //TODO: вынести в класс-companion obj
     private val appMenuBtn = findByResId("main_menu_image_button")
     private val appLogo = findByResId("trademark_image_view")
     private val loveIsAllScreenBtn = findByResId("our_mission_image_button")
     private val accountMenuBtn = findByResId("authorization_image_button")
     private val logoutOption = findByText("Log out")
 
-    //опции дроп-листа меню разделов
-    private val mainSection = findByText("Main")
-    private val claimsSection = findByText("Claims")
-    private val newsSection = findByText("News")
-    private val aboutSection = findByText("About")
-
     @Step
-    fun appBarElementsShouldBeVisible() {
-        appMenuBtn.exists()
-        appLogo.exists()
-        loveIsAllScreenBtn.exists()
-        accountMenuBtn.exists()
-    }
-
-    @Step
-    fun openMainSection(): MainScreen {
+    fun openMainSection(): MainSection {
         appMenuBtn.click()
-        mainSection.click()
-        return MainScreen(this.device)
+        findByText("Main").click()
+        return MainSection(this.device)
     }
 
     fun openClaimsSection(): ClaimsSection {
         appMenuBtn.click()
-        claimsSection.click()
+        findByText("Claims").click()
         return ClaimsSection(this.device)
     }
 
     fun openNewsSection(): NewsSection {
         appMenuBtn.click()
-        newsSection.click()
+        findByText("News").click()
         return NewsSection(this.device)
     }
 
     fun openAboutSection(): AboutScreen {
         appMenuBtn.click()
-        aboutSection.click()
+        findByText("About").click()
         return AboutScreen(this.device)
     }
 

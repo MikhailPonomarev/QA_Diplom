@@ -1,15 +1,20 @@
 package ru.iteco.fmhandoid.uitesting.screens
 
-import androidx.test.uiautomator.*
+import androidx.test.uiautomator.UiCollection
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiSelector
 import io.qameta.allure.kotlin.Step
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 
-class ClaimsSection(private val device: UiDevice) : BaseScreen(device) {
+class MainSection(private val device: UiDevice) : BaseScreen(device) {
+    private val newsContainer = findByResId("container_list_news_include_on_fragment_main")
+    private val claimsContainer = findByResId("container_list_claim_include_on_fragment_main")
+    private val allClaimsBtn = findByResId("") //TODO: implement
     private val addClaimBtn = findByResId("add_new_claim_material_button")
 
     @Step
-    fun assertIsClaimsSection() {
-        findByText("Claims").exists()
+    fun assertIsMainScreen(): Boolean {
+        return newsContainer.exists() && claimsContainer.exists()
     }
 
     @Step
@@ -19,13 +24,8 @@ class ClaimsSection(private val device: UiDevice) : BaseScreen(device) {
     }
 
     @Step
-    fun assertCreatedClaimInClaimsSection(info: ClaimInfo, isExecutorAssigned: Boolean) {
+    fun assertCreatedClaimOnMainScreen(info: ClaimInfo) {
         findByText(info.title).exists()
-        if (isExecutorAssigned) {
-            UiCollection(UiSelector().text(info.executor))
-                .getFromParent(UiSelector().text(info.title))
-                .exists()
-        }
         findByText(info.planDate).exists()
         findByText(info.time).exists()
     }
