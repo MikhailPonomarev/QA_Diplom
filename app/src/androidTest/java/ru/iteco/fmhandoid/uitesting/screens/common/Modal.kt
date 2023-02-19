@@ -1,9 +1,10 @@
-package ru.iteco.fmhandoid.uitesting.screens
+package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import io.qameta.allure.kotlin.Step
 import org.junit.Assert.assertEquals
+import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 
 class Modal(private val device: UiDevice) : BaseScreen(device) {
 

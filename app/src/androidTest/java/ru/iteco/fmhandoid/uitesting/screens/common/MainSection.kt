@@ -1,9 +1,13 @@
-package ru.iteco.fmhandoid.uitesting.screens
+package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiCollection
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import io.qameta.allure.kotlin.Step
+import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimCreateEditScreen
+import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
+import ru.iteco.fmhandoid.uitesting.screens.claims.CreatedClaimScreen
+import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 
 class MainSection(private val device: UiDevice) : BaseScreen(device) {

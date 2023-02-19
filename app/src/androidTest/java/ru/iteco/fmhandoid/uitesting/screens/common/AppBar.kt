@@ -1,7 +1,10 @@
-package ru.iteco.fmhandoid.uitesting.screens
+package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
 import io.qameta.allure.kotlin.Step
+import ru.iteco.fmhandoid.uitesting.screens.*
+import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
+import ru.iteco.fmhandoid.uitesting.screens.news.NewsSection
 
 open class AppBar(private val device: UiDevice) : BaseScreen(device) {
     private val appMenuBtn = findByResId("main_menu_image_button")

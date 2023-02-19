@@ -1,8 +1,11 @@
-package ru.iteco.fmhandoid.uitesting.screens
+package ru.iteco.fmhandoid.uitesting.screens.claims
 
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import io.qameta.allure.kotlin.Step
+import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
+import ru.iteco.fmhandoid.uitesting.screens.common.Modal
+import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 

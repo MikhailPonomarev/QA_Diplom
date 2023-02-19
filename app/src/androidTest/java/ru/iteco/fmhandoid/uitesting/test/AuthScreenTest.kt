@@ -3,7 +3,7 @@ package ru.iteco.fmhandoid.uitesting.test
 import org.junit.Before
 import org.junit.Test
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
-import ru.iteco.fmhandoid.uitesting.screens.AuthScreen
+import ru.iteco.fmhandoid.uitesting.screens.common.AuthScreen
 
 class AuthScreenTest : BaseTest() {
     private val validLogin = Constants.VALID_LOGIN

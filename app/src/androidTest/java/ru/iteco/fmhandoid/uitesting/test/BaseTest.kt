@@ -8,7 +8,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import org.junit.runner.RunWith
-import ru.iteco.fmhandoid.uitesting.screens.AppBar
+import ru.iteco.fmhandoid.uitesting.screens.common.AppBar
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 
 @RunWith(AndroidJUnit4::class)

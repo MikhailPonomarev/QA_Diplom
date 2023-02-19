@@ -4,7 +4,11 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
-import ru.iteco.fmhandoid.uitesting.screens.*
+import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
+import ru.iteco.fmhandoid.uitesting.screens.common.AppBar
+import ru.iteco.fmhandoid.uitesting.screens.common.AuthScreen
+import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
+import ru.iteco.fmhandoid.uitesting.screens.common.Modal
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 
 class ClaimsTest : BaseTest() {

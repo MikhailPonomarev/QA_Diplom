@@ -1,7 +1,8 @@
-package ru.iteco.fmhandoid.uitesting.screens
+package ru.iteco.fmhandoid.uitesting.screens.claims
 
 import androidx.test.uiautomator.*
 import io.qameta.allure.kotlin.Step
+import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 
 class ClaimsSection(private val device: UiDevice) : BaseScreen(device) {

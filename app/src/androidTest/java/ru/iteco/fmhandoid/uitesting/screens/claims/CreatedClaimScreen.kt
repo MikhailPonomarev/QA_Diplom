@@ -1,10 +1,12 @@
-package ru.iteco.fmhandoid.uitesting.screens
+package ru.iteco.fmhandoid.uitesting.screens.claims
 
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import io.qameta.allure.kotlin.Step
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 import org.junit.Assert.assertEquals
+import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
+import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 
 class CreatedClaimScreen(private val device: UiDevice) : BaseScreen(device) {
     private val addCommentBtn = findByResId("add_comment_image_button")
