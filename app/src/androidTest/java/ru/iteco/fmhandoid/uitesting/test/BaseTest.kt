@@ -8,11 +8,13 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import org.junit.runner.RunWith
+import ru.iteco.fmhandoid.uitesting.screens.AppBar
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 
 @RunWith(AndroidJUnit4::class)
 open class BaseTest {
-    lateinit var device: UiDevice
+    protected lateinit var device: UiDevice
+    protected lateinit var appBar: AppBar
     private val timeout = 5000L
     private val packageName = Constants.PACKAGE
 
@@ -23,7 +25,8 @@ open class BaseTest {
         device.wait(Until.hasObject(By.pkg(packageName)), timeout)
     }
 
-    fun initUiDevice() {
+    fun initUiDeviceAndAppBar() {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        appBar = AppBar(device)
     }
 }

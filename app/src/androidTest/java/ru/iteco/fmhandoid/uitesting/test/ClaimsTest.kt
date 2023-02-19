@@ -15,19 +15,20 @@ class ClaimsTest : BaseTest() {
 
     @Before
     fun beforeEach() {
-        initUiDevice()
+        initUiDeviceAndAppBar()
         waitForPackage()
         AuthScreen(device).signIn(Constants.VALID_LOGIN, Constants.VALID_PASS)
+        appBar = AppBar(device)
     }
 
     @After
     fun afterEach() {
-        BaseScreen(device).signOut()
+        AppBar(device).signOut()
     }
 
     @Test
     fun createClaimFromClaimsSectionWithExecutor() {
-        val claimsSectionBeforeCreateFirstClaim = MainSection(device).openClaimsSection()
+        val claimsSectionBeforeCreateFirstClaim = appBar.openClaimsSection()
         claimsSectionBeforeCreateFirstClaim.assertIsClaimsSection()
         val createClaimsScreenFromClaimsSection = claimsSectionBeforeCreateFirstClaim
             .clickAddClaimBtn()
@@ -51,8 +52,7 @@ class ClaimsTest : BaseTest() {
             true
         )
 
-        val mainSectionAfterCreateFirstClaim = createdClaimScreenFromClaimsSection
-            .openMainSection()
+        val mainSectionAfterCreateFirstClaim = appBar.openMainSection()
         mainSectionAfterCreateFirstClaim.assertIsMainScreen()
         mainSectionAfterCreateFirstClaim.assertCreatedClaimOnMainScreen(firstClaimInfo)
 
@@ -68,7 +68,7 @@ class ClaimsTest : BaseTest() {
 
     @Test
     fun createClaimFromClaimsSectionWithoutExecutor() {
-        val claimsSectionBefore = MainSection(device).openClaimsSection()
+        val claimsSectionBefore = appBar.openClaimsSection()
         claimsSectionBefore.assertIsClaimsSection()
         val createClaimsScreen = claimsSectionBefore.clickAddClaimBtn()
 
@@ -97,11 +97,16 @@ class ClaimsTest : BaseTest() {
 
         val createdClaimScreen = mainSectionAfter.openExactClaim(claimInfo.title)
         createdClaimScreen.assertCreatedClaimInfo(claimInfo, false)
+
+        createdClaimScreen
+            .returnToMainSection()
+            .clickAllClaimsBtn()
+            .assertIsClaimsSection()
     }
 
     @Test
     fun editCreatedClaimInOpenStatus() {
-        val claimsSectionBeforeCreate = MainSection(device).openClaimsSection()
+        val claimsSectionBeforeCreate = appBar.openClaimsSection()
 
         val claimInfo = ClaimInfo(openStatus)
         val claimCreateScreen = claimsSectionBeforeCreate.clickAddClaimBtn()
@@ -147,7 +152,7 @@ class ClaimsTest : BaseTest() {
     fun cancelClaimCreate() {
         val cancelModalText = "The changes won't be saved, do you really want to log out?"
 
-        val claimsSectionBefore = MainSection(device).openClaimsSection()
+        val claimsSectionBefore = appBar.openClaimsSection()
         val createClaimScreen = claimsSectionBefore.clickAddClaimBtn()
 
         val cancelModal = createClaimScreen.clickCancelBtn()
@@ -158,7 +163,7 @@ class ClaimsTest : BaseTest() {
 
     @Test
     fun moveClaimInCanceledStatus() {
-        val claimsSectionBeforeCreate = MainSection(device).openClaimsSection()
+        val claimsSectionBeforeCreate = appBar.openClaimsSection()
 
         val claimCreateScreen = claimsSectionBeforeCreate.clickAddClaimBtn()
         val claimInfo = ClaimInfo(openStatus)
@@ -179,7 +184,7 @@ class ClaimsTest : BaseTest() {
     fun checkClaimStatuses() {
         val claimInfo = ClaimInfo(openStatus)
 
-        val claimsSectionAfterCreate = MainSection(device)
+        val claimsSectionAfterCreate = appBar
             .openClaimsSection()
             .clickAddClaimBtn()
             .createClaimFromClaimsSection(claimInfo, false)
@@ -199,7 +204,7 @@ class ClaimsTest : BaseTest() {
     fun shouldThrowOffClaim() {
         val claimInfo = ClaimInfo(openStatus)
 
-        val claimsSectionAfterCreate = MainSection(device)
+        val claimsSectionAfterCreate = appBar
             .openClaimsSection()
             .clickAddClaimBtn()
             .createClaimFromClaimsSection(claimInfo, true)

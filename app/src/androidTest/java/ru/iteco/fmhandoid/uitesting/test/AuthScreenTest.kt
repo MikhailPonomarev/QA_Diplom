@@ -13,7 +13,7 @@ class AuthScreenTest : BaseTest() {
 
     @Before
     fun beforeEach() {
-        initUiDevice()
+        initUiDeviceAndAppBar()
         waitForPackage()
     }
 
@@ -24,7 +24,7 @@ class AuthScreenTest : BaseTest() {
         val mainScreen = AuthScreen(device).signIn(validLogin, validPass)
         mainScreen.assertIsMainScreen()
 
-        val signInScreen = mainScreen.signOut()
+        val signInScreen = appBar.signOut()
         signInScreen.assertIsSignInScreen()
     }
 

@@ -9,7 +9,7 @@ import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 class MainSection(private val device: UiDevice) : BaseScreen(device) {
     private val newsContainer = findByResId("container_list_news_include_on_fragment_main")
     private val claimsContainer = findByResId("container_list_claim_include_on_fragment_main")
-    private val allClaimsBtn = findByResId("") //TODO: implement
+    private val allClaimsBtn = findByResId("all_claims_text_view")
     private val addClaimBtn = findByResId("add_new_claim_material_button")
 
     @Step
@@ -36,5 +36,11 @@ class MainSection(private val device: UiDevice) : BaseScreen(device) {
             .getChildByText(UiSelector().resourceId("${baseId}claim_list_card"), claimTitle)
             .click()
         return CreatedClaimScreen(this.device)
+    }
+
+    @Step
+    fun clickAllClaimsBtn(): ClaimsSection {
+        allClaimsBtn.click()
+        return ClaimsSection(this.device)
     }
 }
