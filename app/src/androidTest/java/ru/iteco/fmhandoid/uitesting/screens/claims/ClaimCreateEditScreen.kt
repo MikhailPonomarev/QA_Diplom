@@ -43,8 +43,8 @@ class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
             executorInput.click()
             executorInput.text = info.executor
             val rect = executorInput.bounds
-            device.waitForWindowUpdate(Constants.PACKAGE, 2000)
-            device.click(rect.left + 64, rect.bottom + 72)
+            this.device.waitForWindowUpdate(Constants.PACKAGE, 2000)
+            this.device.click(rect.left + 64, rect.bottom + 72)
         }
         dateInput.text = info.planDate
         timeInput.text = info.time

@@ -9,6 +9,10 @@ class DataHelper {
             return SimpleDateFormat("dd.MM.yyyy").format(Date())
         }
 
+        fun getCurrentTime(): String {
+            return SimpleDateFormat("HH:mm").format(Date())
+        }
+
         fun getRandomInt(): Int {
             return (0..999).random()
         }
