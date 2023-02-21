@@ -4,12 +4,15 @@ import androidx.test.uiautomator.UiCollection
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import io.qameta.allure.kotlin.Step
+import org.junit.Assert
+import org.junit.Assert.assertFalse
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimCreateEditScreen
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
 import ru.iteco.fmhandoid.uitesting.screens.claims.CreatedClaimScreen
 import ru.iteco.fmhandoid.uitesting.screens.news.NewsSection
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 import ru.iteco.fmhandoid.uitesting.testdata.NewsInfo
+import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
 
 class MainSection(private val device: UiDevice) : BaseScreen(device) {
     private val newsContainer = findByResId("container_list_news_include_on_fragment_main")
@@ -19,8 +22,9 @@ class MainSection(private val device: UiDevice) : BaseScreen(device) {
     private val addClaimBtn = findByResId("add_new_claim_material_button")
 
     @Step
-    fun assertIsMainScreen(): Boolean {
-        return newsContainer.exists() && claimsContainer.exists()
+    fun assertIsMainScreen() {
+        CustomAssertions.assertViewIsVisible(newsContainer)
+        CustomAssertions.assertViewIsVisible(claimsContainer)
     }
 
     @Step
@@ -28,8 +32,15 @@ class MainSection(private val device: UiDevice) : BaseScreen(device) {
         device.findObject(UiSelector().resourceId("${baseId}view_news_item_image_view")
             .fromParent(UiSelector().fromParent(UiSelector().text(info.newsTitle))))
             .click()
-        findByText(info.publicationDate).exists()
-        findByText(info.description).exists()
+        Assert.assertTrue(findByText(info.publicationDate).exists())
+        Assert.assertTrue(findByText(info.description).exists())
+    }
+
+    @Step
+    fun assertDeactivatedNewsNotVisibleInMainSection(newsTitle: String) {
+        assertFalse(
+            findByText(newsTitle).exists()
+        )
     }
 
     @Step

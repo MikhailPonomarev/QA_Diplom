@@ -7,8 +7,11 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
+import org.junit.After
+import org.junit.Before
 import org.junit.runner.RunWith
 import ru.iteco.fmhandoid.uitesting.screens.common.AppBar
+import ru.iteco.fmhandoid.uitesting.screens.common.AuthScreen
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 
 @RunWith(AndroidJUnit4::class)
@@ -28,5 +31,18 @@ open class BaseTest {
     fun initUiDeviceAndAppBar() {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         appBar = AppBar(device)
+    }
+
+    @Before
+    open fun beforeEach() {
+        initUiDeviceAndAppBar()
+        waitForPackage()
+        AuthScreen(device).signIn(Constants.VALID_LOGIN, Constants.VALID_PASS)
+        appBar = AppBar(device)
+    }
+
+    @After
+    fun afterEach() {
+//        AppBar(device).signOut()
     }
 }

@@ -4,13 +4,14 @@ import androidx.test.uiautomator.*
 import io.qameta.allure.kotlin.Step
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
+import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
 
 class ClaimsSection(private val device: UiDevice) : BaseScreen(device) {
     private val addClaimBtn = findByResId("add_new_claim_material_button")
 
     @Step
     fun assertIsClaimsSection() {
-        findByText("Claims").exists()
+        CustomAssertions.assertViewIsVisible(findByText("Claims"))
     }
 
     @Step

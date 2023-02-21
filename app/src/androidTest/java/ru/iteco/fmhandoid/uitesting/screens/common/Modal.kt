@@ -9,7 +9,7 @@ import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 class Modal(private val device: UiDevice) : BaseScreen(device) {
 
     @Step
-    fun assertModalIsOpen(expectedText: String) {
+    fun assertModalText(expectedText: String) {
         val modalText = this.device
             .findObject(UiSelector().resourceId("android:id/message")).text
         assertEquals(expectedText, modalText)

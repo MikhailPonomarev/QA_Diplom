@@ -4,6 +4,7 @@ import androidx.test.uiautomator.UiDevice
 import io.qameta.allure.kotlin.Step
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
+import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
 
 class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
     private val screenTitle = findByText("Authorization")

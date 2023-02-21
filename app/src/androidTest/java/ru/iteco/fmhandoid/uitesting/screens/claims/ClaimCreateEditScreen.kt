@@ -1,13 +1,13 @@
 package ru.iteco.fmhandoid.uitesting.screens.claims
 
 import androidx.test.uiautomator.UiDevice
-import androidx.test.uiautomator.UiSelector
 import io.qameta.allure.kotlin.Step
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
 import ru.iteco.fmhandoid.uitesting.screens.common.Modal
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
+import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
 
 class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
     private val titleInput = findByResId("title_edit_text")
@@ -66,17 +66,25 @@ class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
     @Step
     fun assertEmptyFieldAlertsAreVisible() {
         val alertIconId = "${baseId}text_input_end_icon"
-        device
-            .findObject(UiSelector().resourceId(alertIconId).fromParent(titleInput.selector))
-            .exists()
-        device
-            .findObject(UiSelector().resourceId(alertIconId).fromParent(dateInput.selector))
-            .exists()
-        device
-            .findObject(UiSelector().resourceId(alertIconId).fromParent(timeInput.selector))
-            .exists()
-        device
-            .findObject(UiSelector().resourceId(alertIconId).fromParent(descriptionInput.selector))
-            .exists()
+
+        CustomAssertions.assertEmptyFieldAlertIconIsVisible(
+            findByResId("title_text_input_layout"),
+            alertIconId
+        )
+
+        CustomAssertions.assertEmptyFieldAlertIconIsVisible(
+            findByResId("date_in_plan_text_input_layout"),
+            alertIconId
+        )
+
+        CustomAssertions.assertEmptyFieldAlertIconIsVisible(
+            findByResId("time_in_plan_text_input_layout"),
+            alertIconId
+        )
+
+        CustomAssertions.assertEmptyFieldAlertIconIsVisible(
+            findByResId("description_text_input_layout"),
+            alertIconId
+        )
     }
 }

@@ -6,5 +6,4 @@ class NewsInfo(val publicationDate: String) {
     val newsTitle = "$randomInt New News"
     val publicationTime = DataHelper.getCurrentTime()
     val description = "News Description $randomInt"
-//    val author = "Ivanov I.I."
 }

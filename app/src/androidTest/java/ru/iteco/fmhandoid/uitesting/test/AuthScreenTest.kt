@@ -12,7 +12,7 @@ class AuthScreenTest : BaseTest() {
     private val falsePass = Constants.FALSE_PASS
 
     @Before
-    fun beforeEach() {
+    override fun beforeEach() {
         initUiDeviceAndAppBar()
         waitForPackage()
     }

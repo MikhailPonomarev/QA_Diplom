@@ -1,12 +1,7 @@
 package ru.iteco.fmhandoid.uitesting.test
 
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
-import ru.iteco.fmhandoid.uitesting.testdata.Constants
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
-import ru.iteco.fmhandoid.uitesting.screens.common.AppBar
-import ru.iteco.fmhandoid.uitesting.screens.common.AuthScreen
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
 import ru.iteco.fmhandoid.uitesting.screens.common.Modal
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
@@ -16,19 +11,6 @@ class ClaimsTest : BaseTest() {
     private val inProgressStatus = "In progress"
     private val executedStatus = "Executed"
     private val comment = "Комментарий к заявке"
-
-    @Before
-    fun beforeEach() {
-        initUiDeviceAndAppBar()
-        waitForPackage()
-        AuthScreen(device).signIn(Constants.VALID_LOGIN, Constants.VALID_PASS)
-        appBar = AppBar(device)
-    }
-
-    @After
-    fun afterEach() {
-        AppBar(device).signOut()
-    }
 
     @Test
     fun createClaimFromClaimsSectionWithExecutor() {
@@ -145,7 +127,7 @@ class ClaimsTest : BaseTest() {
         claimCreateScreen.clickSaveBtn()
 
         val emptyModal = Modal(device)
-        emptyModal.assertModalIsOpen("Fill empty fields")
+        emptyModal.assertModalText("Fill empty fields")
         emptyModal.clickOk()
 
         claimCreateScreen.assertEmptyFieldAlertsAreVisible()
@@ -154,13 +136,13 @@ class ClaimsTest : BaseTest() {
 
     @Test
     fun cancelClaimCreate() {
-        val cancelModalText = "The changes won't be saved, do you really want to log out?"
-
         val claimsSectionBefore = appBar.openClaimsSection()
         val createClaimScreen = claimsSectionBefore.clickAddClaimBtn()
 
         val cancelModal = createClaimScreen.clickCancelBtn()
-        cancelModal.assertModalIsOpen(cancelModalText)
+        cancelModal.assertModalText(
+            "The changes won't be saved, do you really want to log out?"
+        )
         cancelModal.clickOk()
         ClaimsSection(device).assertIsClaimsSection()
     }
