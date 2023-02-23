@@ -1,7 +1,6 @@
 package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.*
-import io.qameta.allure.kotlin.Step
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 
 open class BaseScreen(private val device: UiDevice) {

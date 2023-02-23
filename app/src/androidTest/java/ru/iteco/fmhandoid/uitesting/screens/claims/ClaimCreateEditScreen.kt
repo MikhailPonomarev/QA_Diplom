@@ -1,7 +1,7 @@
 package ru.iteco.fmhandoid.uitesting.screens.claims
 
 import androidx.test.uiautomator.UiDevice
-import io.qameta.allure.kotlin.Step
+import io.qameta.allure.kotlin.Allure
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
 import ru.iteco.fmhandoid.uitesting.screens.common.Modal
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
@@ -18,26 +18,30 @@ class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
     private val saveBtn = findByResId("save_button")
     private val cancelBtn = findByResId("cancel_button")
 
-    @Step
     fun createClaimFromClaimsSection(info: ClaimInfo, isWithExecutor: Boolean): ClaimsSection {
+        Allure.step("Создать претензию в разделе Claims")
+
         fillClaimFieldsAndSave(info, isWithExecutor)
         return ClaimsSection(this.device)
     }
 
-    @Step
     fun createClaimFromMainSection(info: ClaimInfo, isWithExecutor: Boolean): MainSection {
+        Allure.step("Создать претензию в разделе Main")
+
         fillClaimFieldsAndSave(info, isWithExecutor)
         return MainSection(this.device)
     }
 
-    @Step
     fun editCreatedClaim(info: ClaimInfo, isWithExecutor: Boolean): CreatedClaimScreen {
+        Allure.step("Отредактировать претензию")
+
         fillClaimFieldsAndSave(info, isWithExecutor)
         return CreatedClaimScreen(this.device)
     }
 
-    @Step
     private fun fillClaimFieldsAndSave(info: ClaimInfo, isExecutor: Boolean) {
+        Allure.step("Заполнить претензию и нажать кнопку Save")
+
         titleInput.text = info.title
         if (isExecutor) {
             executorInput.click()
@@ -52,19 +56,22 @@ class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
         saveBtn.click()
     }
 
-    @Step
     fun clickSaveBtn() {
+        Allure.step("Нажать кнопку Save")
+
         saveBtn.click()
     }
 
-    @Step
     fun clickCancelBtn(): Modal {
+        Allure.step("Нажать кнопку Cancel")
+
         cancelBtn.click()
         return Modal(this.device)
     }
 
-    @Step
     fun assertEmptyFieldAlertsAreVisible() {
+        Allure.step("Должны появиться алерты для незаполненных полей")
+
         val alertIconId = "${baseId}text_input_end_icon"
 
         assertEmptyFieldAlertIconIsVisible(

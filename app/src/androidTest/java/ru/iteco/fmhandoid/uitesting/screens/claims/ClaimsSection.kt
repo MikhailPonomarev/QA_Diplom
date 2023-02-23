@@ -1,7 +1,7 @@
 package ru.iteco.fmhandoid.uitesting.screens.claims
 
 import androidx.test.uiautomator.*
-import io.qameta.allure.kotlin.Step
+import io.qameta.allure.kotlin.Allure
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
@@ -11,19 +11,22 @@ class ClaimsSection(private val device: UiDevice) : BaseScreen(device) {
     private val claimsRecyclerViewId = "${baseId}claim_list_recycler_view"
     private val claimListCardId = "${baseId}claim_list_card"
 
-    @Step
     fun assertIsClaimsSection() {
+        Allure.step("Должен быть открыт раздел Claims")
+
         assertViewIsVisible(findByText("Claims"))
     }
 
-    @Step
     fun clickAddClaimBtn(): ClaimCreateEditScreen {
+        Allure.step("Нажать кнопку \"Добавить претензию\"")
+
         addClaimBtn.click()
         return ClaimCreateEditScreen(this.device)
     }
 
-    @Step
     fun assertCreatedClaimInClaimsSection(info: ClaimInfo, isExecutorAssigned: Boolean) {
+        Allure.step("Созданная претензия должна отображаться в разделе Claims")
+
         val parentClaim = UiCollection(UiSelector().resourceId(claimsRecyclerViewId))
             .getChildByInstance(UiSelector().resourceId(claimListCardId), 0)
 
@@ -54,8 +57,9 @@ class ClaimsSection(private val device: UiDevice) : BaseScreen(device) {
         )
     }
 
-    @Step
     fun openExactClaim(claimTitle: String): CreatedClaimScreen {
+        Allure.step("Открыть претензию по заголовку")
+
         UiCollection(UiSelector().resourceId(claimsRecyclerViewId))
             .getChildByText(UiSelector().resourceId(claimListCardId), claimTitle)
             .click()

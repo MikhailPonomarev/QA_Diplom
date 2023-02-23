@@ -1,5 +1,6 @@
 package ru.iteco.fmhandoid.uitesting.test
 
+import io.qameta.allure.kotlin.junit4.DisplayName
 import org.junit.Test
 import ru.iteco.fmhandoid.uitesting.screens.news.NewsSection
 import ru.iteco.fmhandoid.uitesting.testdata.DataHelper
@@ -8,7 +9,8 @@ import ru.iteco.fmhandoid.uitesting.testdata.NewsInfo
 class NewsTest : BaseTest() {
 
     @Test
-    fun createNewsOnCurrentDate() {
+    @DisplayName("Создать новость в разделе News")
+    fun createNews() {
         val newsSectionBefore = appBar.openNewsSection()
         newsSectionBefore.assertIsNewsSection()
 
@@ -36,6 +38,7 @@ class NewsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Отредактировать новость")
     fun editCreatedNews() {
         val newsControlPanelBeforeCreate = appBar
             .openNewsSection()
@@ -48,9 +51,7 @@ class NewsTest : BaseTest() {
         val newsControlPanelAfterCreate = newsCreateScreen.createNews(newsInfo)
         newsControlPanelAfterCreate.assertCreatedNewsInfoInControlPanel(newsInfo)
 
-        val newsEditScreen = newsControlPanelAfterCreate.openCreatedNewsForEdit(
-            newsInfo.newsTitle
-        )
+        val newsEditScreen = newsControlPanelAfterCreate.openCreatedNewsForEdit()
         newsEditScreen.assertIsEditingNewsScreen()
         val updNewsInfo = NewsInfo(DataHelper.getCurrentDate())
         newsEditScreen.editNews(updNewsInfo)
@@ -66,6 +67,7 @@ class NewsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Удалить новость")
     fun deleteNews() {
         val newsControlPanelBefore = appBar
             .openNewsSection()
@@ -88,6 +90,7 @@ class NewsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Сделать новость неактивной")
     fun deactivateNews() {
         val newsInfo = NewsInfo(DataHelper.getCurrentDate())
         appBar
@@ -109,7 +112,7 @@ class NewsTest : BaseTest() {
             newsInfo.newsTitle,
             newsInfo.publicationDate
         )
-        val newsEditScreen = newsControlPanel.openCreatedNewsForEdit(newsInfo.newsTitle)
+        val newsEditScreen = newsControlPanel.openCreatedNewsForEdit()
         newsEditScreen.assertIsEditingNewsScreen()
         newsEditScreen.clickActiveSwitcher()
         newsEditScreen.clickSaveBtn()
@@ -126,6 +129,7 @@ class NewsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Создание новости с пустыми полями")
     fun createNewsWithEmptyFields() {
         val newsCreateScreen = appBar
             .openNewsSection()
@@ -138,7 +142,8 @@ class NewsTest : BaseTest() {
     }
 
     @Test
-    fun createNewsOnFutureDate() {
+    @DisplayName("Отмена создания новости")
+    fun cancelNewsCreate() {
         val newsCreateScreen = appBar
             .openNewsSection()
             .clickControlPanelBtn()

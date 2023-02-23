@@ -1,9 +1,8 @@
 package ru.iteco.fmhandoid.uitesting.screens.about
 
 import androidx.test.uiautomator.UiDevice
-import io.qameta.allure.kotlin.Step
+import io.qameta.allure.kotlin.Allure
 import org.junit.Assert.assertEquals
-import org.junit.Test
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
@@ -16,14 +15,16 @@ class AboutScreen(private val device: UiDevice) : BaseScreen(device)  {
     private val thermsOfUseLink = findByResId("about_terms_of_use_value_text_view")
     private val chromePackage = "com.android.chrome"
 
-    @Step
     fun clickBackBtn(): MainSection {
+        Allure.step("Нажать кнопку \"Назад\"")
+
         findByResId("about_back_image_button").click()
         return MainSection(this.device)
     }
 
-    @Step
     fun assertIsAboutScreen() {
+        Allure.step("Должен быть открыт раздел Love is all")
+
         assertViewIsVisible(findByResId("trademark_image_view"))
         assertViewIsVisible(versionTitle)
         assertViewIsVisible(privacyPolicyTitle)
@@ -31,8 +32,9 @@ class AboutScreen(private val device: UiDevice) : BaseScreen(device)  {
         assertViewIsVisible(findByResId("about_company_info_label_text_view"))
     }
 
-    @Step
     fun assertAppVersionText(expectedVersion: String) {
+        Allure.step("Проверить версию приложени")
+
         assertEquals(
             "Version:",
             versionTitle.text
@@ -44,8 +46,9 @@ class AboutScreen(private val device: UiDevice) : BaseScreen(device)  {
         )
     }
 
-    @Step
     fun assertPrivacyPolicyContent() {
+        Allure.step("Проверить заголовок и ссылку Privacy Policy")
+
         assertEquals(
             "Privacy Policy:",
             privacyPolicyTitle.text
@@ -57,8 +60,9 @@ class AboutScreen(private val device: UiDevice) : BaseScreen(device)  {
         )
     }
 
-    @Step
     fun assertThermsOfUseContent() {
+        Allure.step("Проверить заголовок и ссылку Terms of use")
+
         assertEquals(
             "Terms of use:",
             thermsOfUseTitle.text
@@ -70,8 +74,9 @@ class AboutScreen(private val device: UiDevice) : BaseScreen(device)  {
         )
     }
 
-    @Test
     fun assertPrivacyPolicyLinkClickOpensBrowser() {
+        Allure.step("Нажатие на ссылку Privacy Policy должно открыть браузер")
+
         privacyPolicyLink.click()
         val currentPackage: String = this.device.currentPackageName
         assertEquals(
@@ -80,8 +85,9 @@ class AboutScreen(private val device: UiDevice) : BaseScreen(device)  {
         )
     }
 
-    @Test
     fun assertThermsOfUseLinkClickOpensBrowser() {
+        Allure.step("Нажатие на ссылку Terms of use должно открыть браузер")
+
         thermsOfUseLink.click()
         val currentPackage: String = this.device.currentPackageName
         assertEquals(

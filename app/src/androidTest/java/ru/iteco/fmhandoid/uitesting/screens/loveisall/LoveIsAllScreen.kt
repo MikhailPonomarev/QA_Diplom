@@ -3,7 +3,7 @@ package ru.iteco.fmhandoid.uitesting.screens.loveisall
 import androidx.test.uiautomator.UiCollection
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
-import io.qameta.allure.kotlin.Step
+import io.qameta.allure.kotlin.Allure
 import org.junit.Assert.assertEquals
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
@@ -11,8 +11,9 @@ import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewI
 class LoveIsAllScreen(private val device: UiDevice) : BaseScreen(device) {
     private val quotesRecyclerView = findByResId("our_mission_item_list_recycler_view")
 
-    @Step
     fun assertIsLoveIsAllScreen() {
+        Allure.step("Должен быть открыт экран Love is all")
+
         assertEquals(
             "Love is all",
             findByResId("our_mission_title_text_view").text
@@ -20,8 +21,9 @@ class LoveIsAllScreen(private val device: UiDevice) : BaseScreen(device) {
         assertViewIsVisible(quotesRecyclerView)
     }
 
-    @Step
     fun assertFirstQuoteContent() {
+        Allure.step("Проверить содержание цитаты")
+
         val firstQuote = UiCollection(quotesRecyclerView.selector)
             .getChildByInstance(
                 UiSelector().resourceId("${baseId}our_mission_item_material_card_view"),

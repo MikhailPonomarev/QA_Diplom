@@ -1,5 +1,6 @@
 package ru.iteco.fmhandoid.uitesting.test
 
+import io.qameta.allure.kotlin.junit4.DisplayName
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -24,6 +25,7 @@ class AuthScreenTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Авторизация с валидными данными и выход из аккаунта")
     fun shouldSignInAndSignOut() {
         AuthScreen(device).loadingScreenElementsShouldBeVisible()
 
@@ -35,6 +37,7 @@ class AuthScreenTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Авторизация с невалидными и пустыми данными")
     fun signInWithFalseCredentials() {
         val signInScreen = AuthScreen(device)
         signInScreen.loadingScreenElementsShouldBeVisible()

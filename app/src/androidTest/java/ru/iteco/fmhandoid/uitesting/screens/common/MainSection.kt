@@ -3,8 +3,7 @@ package ru.iteco.fmhandoid.uitesting.screens.common
 import androidx.test.uiautomator.UiCollection
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
-import io.qameta.allure.kotlin.Step
-import org.junit.Assert
+import io.qameta.allure.kotlin.Allure
 import org.junit.Assert.assertFalse
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimCreateEditScreen
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
@@ -12,7 +11,6 @@ import ru.iteco.fmhandoid.uitesting.screens.claims.CreatedClaimScreen
 import ru.iteco.fmhandoid.uitesting.screens.news.NewsSection
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 import ru.iteco.fmhandoid.uitesting.testdata.NewsInfo
-import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
 class MainSection(private val device: UiDevice) : BaseScreen(device) {
@@ -22,14 +20,16 @@ class MainSection(private val device: UiDevice) : BaseScreen(device) {
     private val allClaimsBtn = findByResId("all_claims_text_view")
     private val addClaimBtn = findByResId("add_new_claim_material_button")
 
-    @Step
     fun assertIsMainScreen() {
+        Allure.step("Должен быть открыт раздел Main")
+
         assertViewIsVisible(newsContainer)
         assertViewIsVisible(claimsContainer)
     }
 
-    @Step
     fun assertCreatedNewsInMainSection(info: NewsInfo) {
+        Allure.step("Созданная новость должна отображаться разделе Main")
+
         device.findObject(
             UiSelector().resourceId("${baseId}view_news_item_image_view")
                 .fromParent(UiSelector().fromParent(UiSelector().text(info.newsTitle)))
@@ -39,27 +39,31 @@ class MainSection(private val device: UiDevice) : BaseScreen(device) {
         assertViewIsVisible(findByText(info.description))
     }
 
-    @Step
     fun assertDeactivatedNewsNotVisibleInMainSection(newsTitle: String) {
+        Allure.step("Неактивная новость не должна отображаться разделе Main")
+
         assertFalse(
             findByText(newsTitle).exists()
         )
     }
 
-    @Step
     fun clickAllNewsBtn(): NewsSection {
+        Allure.step("Нажать кнопку All News")
+
         allNewsBtn.click()
         return NewsSection(this.device)
     }
 
-    @Step
     fun clickAddClaimBtn(): ClaimCreateEditScreen {
+        Allure.step("Нажать кнопку All News")
+
         addClaimBtn.click()
         return ClaimCreateEditScreen(this.device)
     }
 
-    @Step
     fun assertCreatedClaimOnMainScreen(info: ClaimInfo, isExecutorAssigned: Boolean) {
+        Allure.step("Созданная претензия должна отображаться в разделе Main")
+
         val parentClaim = UiCollection(
             UiSelector().resourceId("${baseId}claim_list_recycler_view")
         ).getChildByInstance(UiSelector().resourceId("${baseId}claim_list_card"), 0)
@@ -91,16 +95,18 @@ class MainSection(private val device: UiDevice) : BaseScreen(device) {
         )
     }
 
-    @Step
     fun openExactClaim(claimTitle: String): CreatedClaimScreen {
+        Allure.step("Открыть претензию в разделе Main по заголовку")
+
         UiCollection(UiSelector().resourceId("${baseId}claim_list_recycler_view"))
             .getChildByText(UiSelector().resourceId("${baseId}claim_list_card"), claimTitle)
             .click()
         return CreatedClaimScreen(this.device)
     }
 
-    @Step
     fun clickAllClaimsBtn(): ClaimsSection {
+        Allure.step("Нажать кнопку All Claims")
+
         allClaimsBtn.click()
         return ClaimsSection(this.device)
     }

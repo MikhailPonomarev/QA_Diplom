@@ -1,7 +1,7 @@
 package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
-import io.qameta.allure.kotlin.Step
+import io.qameta.allure.kotlin.Allure
 import ru.iteco.fmhandoid.uitesting.screens.about.AboutScreen
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
 import ru.iteco.fmhandoid.uitesting.screens.loveisall.LoveIsAllScreen
@@ -13,42 +13,48 @@ open class AppBar(private val device: UiDevice) : BaseScreen(device) {
     private val accountMenuBtn = findByResId("authorization_image_button")
     private val logoutOption = findByText("Log out")
 
-    @Step
     fun openMainSection(): MainSection {
+        Allure.step("Открыть раздел Main")
+
         appMenuBtn.click()
         findByText("Main").click()
         return MainSection(this.device)
     }
 
-    @Step
     fun openClaimsSection(): ClaimsSection {
+        Allure.step("Открыть раздел Claims")
+
         appMenuBtn.click()
         findByText("Claims").click()
         return ClaimsSection(this.device)
     }
 
-    @Step
     fun openNewsSection(): NewsSection {
+        Allure.step("Открыть раздел News")
+
         appMenuBtn.click()
         findByText("News").click()
         return NewsSection(this.device)
     }
 
-    @Step
     fun openAboutScreen(): AboutScreen {
+        Allure.step("Открыть экран About")
+
         appMenuBtn.click()
         findByText("About").click()
         return AboutScreen(this.device)
     }
 
-    @Step
     fun openLoveIsAllScreen(): LoveIsAllScreen {
+        Allure.step("Открыть экран Love is all")
+
         loveIsAllScreenBtn.click()
         return LoveIsAllScreen(this.device)
     }
 
-    @Step
     fun signOut(): AuthScreen {
+        Allure.step("Выйти из аккаунта в приложении")
+
         accountMenuBtn.click()
         logoutOption.click()
         return AuthScreen(this.device)

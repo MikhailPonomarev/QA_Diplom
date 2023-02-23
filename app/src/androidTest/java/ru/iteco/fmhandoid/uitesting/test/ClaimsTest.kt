@@ -1,5 +1,6 @@
 package ru.iteco.fmhandoid.uitesting.test
 
+import io.qameta.allure.kotlin.junit4.DisplayName
 import org.junit.Test
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
@@ -13,6 +14,7 @@ class ClaimsTest : BaseTest() {
     private val comment = "Комментарий к заявке"
 
     @Test
+    @DisplayName("Создать претензию в разделе Claims с выбором исполнителя")
     fun createClaimFromClaimsSectionWithExecutor() {
         val claimsSectionBeforeCreateFirstClaim = appBar.openClaimsSection()
         claimsSectionBeforeCreateFirstClaim.assertIsClaimsSection()
@@ -56,6 +58,7 @@ class ClaimsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Создать претензию в разделе Claims без выбора исполнителя")
     fun createClaimFromClaimsSectionWithoutExecutor() {
         val claimsSectionBefore = appBar.openClaimsSection()
         claimsSectionBefore.assertIsClaimsSection()
@@ -74,6 +77,7 @@ class ClaimsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Создать претензию из раздела Main")
     fun createClaimFromMainSection() {
         val createClaimScreen = MainSection(device).clickAddClaimBtn()
         val claimInfo = ClaimInfo(openStatus)
@@ -93,7 +97,8 @@ class ClaimsTest : BaseTest() {
             .assertIsClaimsSection()
     }
 
-    @Test
+    @Test()
+    @DisplayName("Редактирование претензии в статусе Open")
     fun editCreatedClaimInOpenStatus() {
         val claimsSectionBeforeCreate = appBar.openClaimsSection()
 
@@ -125,6 +130,7 @@ class ClaimsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Создание претензии с пустыми полями")
     fun shouldNotCreateClaimWithEmptyFields() {
         val claimCreateScreen = MainSection(device).clickAddClaimBtn()
         claimCreateScreen.clickSaveBtn()
@@ -138,6 +144,7 @@ class ClaimsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Отмена создания претензии")
     fun cancelClaimCreate() {
         val claimsSectionBefore = appBar.openClaimsSection()
         val createClaimScreen = claimsSectionBefore.clickAddClaimBtn()
@@ -151,6 +158,7 @@ class ClaimsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Отмена претензии, перевод в статус Canceled")
     fun moveClaimInCanceledStatus() {
         val claimsSectionBeforeCreate = appBar.openClaimsSection()
 
@@ -170,6 +178,7 @@ class ClaimsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Проверка workflow претензии")
     fun checkClaimStatuses() {
         val claimInfo = ClaimInfo(openStatus)
 
@@ -190,6 +199,7 @@ class ClaimsTest : BaseTest() {
     }
 
     @Test
+    @DisplayName("Отказ от исполнения претензии, перевод в статус Open")
     fun shouldThrowOffClaim() {
         val claimInfo = ClaimInfo(openStatus)
 

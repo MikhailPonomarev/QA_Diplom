@@ -4,9 +4,8 @@ import androidx.test.uiautomator.UiCollection
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
-import io.qameta.allure.kotlin.Step
+import io.qameta.allure.kotlin.Allure
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.screens.common.Modal
 import ru.iteco.fmhandoid.uitesting.testdata.NewsInfo
@@ -18,31 +17,36 @@ class NewsSection(private val device: UiDevice) : BaseScreen(device) {
     private val newsRecyclerViewId = "${baseId}news_list_recycler_view"
     private val newsCardViewId = "${baseId}news_item_material_card_view"
 
-    @Step
     fun assertIsNewsSection() {
+        Allure.step("Должен быть открыт раздел News")
+
         assertViewIsVisible(findByText("News"))
     }
 
-    @Step
     fun assertIsControlPanel() {
+        Allure.step("Должна быть открыта Control panel раздела News")
+
         assertViewIsVisible(findByText("Control panel"))
     }
 
-    @Step
     fun clickControlPanelBtn(): NewsSection {
+        Allure.step("Нажать кнопку Control panel")
+
         controlPanelBtn.click()
         assertViewIsVisible(findByText("Control panel"))
         return NewsSection(this.device)
     }
 
-    @Step
     fun clickAddNewsBtn(): NewsCreateEditScreen {
+        Allure.step("Нажать кнопку \"Добавить новость\"")
+
         addNewsBtn.click()
         return NewsCreateEditScreen(this.device)
     }
 
-    @Step
     fun assertCreatedNewsInfoInControlPanel(info: NewsInfo) {
+        Allure.step("Созданная новость должна отображаться в Control panel")
+
         val parentNews =
             UiCollection(UiSelector().resourceId(newsRecyclerViewId))
                 .getChildByInstance(
@@ -56,8 +60,9 @@ class NewsSection(private val device: UiDevice) : BaseScreen(device) {
         assertViewIsVisible(parentNews.getChild(findByText(info.description).selector))
     }
 
-    @Step
-    fun openCreatedNewsForEdit(newsTitle: String): NewsCreateEditScreen {
+    fun openCreatedNewsForEdit(): NewsCreateEditScreen {
+        Allure.step("Открыть новость для редактирования")
+
         val exactEditBtn =
             UiCollection(UiSelector().resourceId(newsRecyclerViewId))
                 .getChildByInstance(
@@ -68,8 +73,9 @@ class NewsSection(private val device: UiDevice) : BaseScreen(device) {
         return NewsCreateEditScreen(this.device)
     }
 
-    @Step
     fun assertCreatedNewsInNewsSection(info: NewsInfo) {
+        Allure.step("Созданная новость должна отображаться в разделе News")
+
         device.findObject(
             UiSelector().resourceId("${baseId}view_news_item_image_view")
                 .fromParent(UiSelector().fromParent(UiSelector().text(info.newsTitle)))
@@ -78,8 +84,9 @@ class NewsSection(private val device: UiDevice) : BaseScreen(device) {
         assertViewIsVisible(findByText(info.description))
     }
 
-    @Step
     fun clickDeleteNews(): Modal {
+        Allure.step("Удалить новость")
+
         val exactDeleteBtn =
             UiCollection(UiSelector().resourceId(newsRecyclerViewId))
                 .getChildByInstance(
@@ -90,22 +97,25 @@ class NewsSection(private val device: UiDevice) : BaseScreen(device) {
         return Modal(this.device)
     }
 
-    @Step
     fun assertDeletedNewsNotExist(newsTitle: String) {
+        Allure.step("Удаленная новость не должна отображаться")
+
         assertFalse(
             findByText(newsTitle).exists()
         )
     }
 
-    @Step
     fun assertDeactivatedNewsNotVisibleInNewsSection(newsTitle: String) {
+        Allure.step("Неактивная новость не должна отображаться")
+
         assertFalse(
             findByText(newsTitle).exists()
         )
     }
 
-    @Step
     fun scrollToExactNews(newsTitle: String, publicationDate: String) {
+        Allure.step("Проскроллить к созданной новости")
+
         findByResId("filter_news_material_button").click()
         findByResId("news_item_publish_date_start_text_input_edit_text").text = publicationDate
         findByResId("news_item_publish_date_end_text_input_edit_text").text = publicationDate

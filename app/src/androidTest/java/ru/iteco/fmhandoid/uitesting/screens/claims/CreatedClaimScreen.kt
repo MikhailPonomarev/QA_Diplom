@@ -2,7 +2,7 @@ package ru.iteco.fmhandoid.uitesting.screens.claims
 
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
-import io.qameta.allure.kotlin.Step
+import io.qameta.allure.kotlin.Allure
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 import org.junit.Assert.assertEquals
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
@@ -14,8 +14,9 @@ class CreatedClaimScreen(private val device: UiDevice) : BaseScreen(device) {
     private val actionsDropListBtn = findByResId("status_processing_image_button")
     private val editBtn = findByResId("edit_processing_image_button")
 
-    @Step
     fun assertCreatedClaimInfo(info: ClaimInfo, isExecutorAssigned: Boolean) {
+        Allure.step("Проверить созданную претензию")
+
         val actualTitle = findByResId("title_text_view").text
         assertEquals(info.title, actualTitle)
 
@@ -41,76 +42,87 @@ class CreatedClaimScreen(private val device: UiDevice) : BaseScreen(device) {
         assertEquals(info.executor, actualAuthor)
     }
 
-    @Step
     fun returnToClaimsSection(): ClaimsSection {
+        Allure.step("Закрыть претензию и вернуться в раздел Claims")
+
         closeClaimBtn.click()
         return ClaimsSection(this.device)
     }
 
-    @Step
     fun returnToMainSection(): MainSection {
+        Allure.step("Закрыть претензию и вернуться в раздел Main")
+
         closeClaimBtn.click()
         return MainSection(this.device)
     }
 
-    @Step
     fun clickEditClaimBtn(): ClaimCreateEditScreen {
+        Allure.step("Нажать кнопку \"Редактировать претензию\"")
+
         editBtn.click()
         return ClaimCreateEditScreen(this.device)
     }
 
-    @Step
     fun assertClaimStatus(expectedStatus: String) {
+        Allure.step("Проверить статус претензии")
+
         val actualStatus = findByResId("status_label_text_view").text
         assertEquals(expectedStatus, actualStatus)
     }
 
-    @Step
     fun takeToWork(): CreatedClaimScreen {
+        Allure.step("Перевести претензию в статус \"In progress\"")
+
         actionsDropListBtn.click()
         findByText("take to work").click()
         return CreatedClaimScreen(this.device)
     }
 
-    @Step
     fun toExecute(comment: String): CreatedClaimScreen {
+        Allure.step("Перевести претензию в статус \"Executed\"")
+
         actionsDropListBtn.click()
         findByText("To execute").click()
         leaveCommentOnStatusChange(comment)
         return CreatedClaimScreen(this.device)
     }
 
-    @Step
     fun throwOff(comment: String): CreatedClaimScreen {
+        Allure.step("Перевести претензию в статус \"Open\"")
+
         actionsDropListBtn.click()
         findByText("Throw off").click()
         leaveCommentOnStatusChange(comment)
         return CreatedClaimScreen(this.device)
     }
 
-    @Step
     private fun leaveCommentOnStatusChange(comment: String) {
+        Allure.step("Оставить комментарий при смене статуса заявки")
+
         findByResId("editText").text = comment
         findByText("OK").click()
     }
 
-    @Step
     fun cancelClaim(): CreatedClaimScreen {
+        Allure.step("Перевести претензию в статус \"Canceled\"")
+
         actionsDropListBtn.click()
         findByText("Cancel").click()
         return CreatedClaimScreen(this.device)
     }
 
-    @Step
     fun addComment(comment: String): CreatedClaimScreen {
+        Allure.step("Добавить комментарий к заявке")
+
         addCommentBtn.click()
         find(By.clazz("android.widget.EditText")).text = comment
         findByResId("save_button").click()
         return CreatedClaimScreen(this.device)
     }
 
-    @Step
     fun assertCommentIsPresent(expectedComment: String) {
+        Allure.step("Проверить добавленный комментарий")
+
         val actualComment = findByResId("comment_description_text_view").text
         assertEquals(expectedComment, actualComment)
     }

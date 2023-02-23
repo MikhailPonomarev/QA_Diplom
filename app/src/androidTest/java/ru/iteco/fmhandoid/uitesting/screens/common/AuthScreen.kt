@@ -1,7 +1,7 @@
 package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
-import io.qameta.allure.kotlin.Step
+import io.qameta.allure.kotlin.Allure
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
 class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
@@ -12,55 +12,64 @@ class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
     private val emptyFieldAlert = findByText("Login and password cannot be empty")
     private val wrongCredentialsAlert = findByText("Wrong login or password")
 
-    @Step
     fun loadingScreenElementsShouldBeVisible() {
+        Allure.step("Должны отображаться элементы загрузочного экрана")
+
         assertViewIsVisible(findByResId("splashscreen_image_view"))
         assertViewIsVisible(findByResId("splash_screen_circular_progress_indicator"))
         assertViewIsVisible(findByResId("splashscreen_text_view"))
     }
 
-    @Step
     fun assertIsSignInScreen() {
+        Allure.step("Должен быть открыт экран Авторизации")
+
         assertViewIsVisible(screenTitle)
         assertViewIsVisible(loginInput)
         assertViewIsVisible(passInput)
         assertViewIsVisible(signInBtn)
     }
 
-    @Step
     fun enterLogin(login: String) {
+        Allure.step("Ввести логин")
+
         loginInput.waitForExists(10000)
         loginInput.text = login
     }
 
-    @Step
     fun enterPass(pass: String) {
+        Allure.step("Ввести пароль")
+
         passInput.text = pass
     }
 
-    @Step
     fun clearInputFields(login: String, pass: String) {
+        Allure.step("Очистить поля логина и пароля")
+
         findByText(login).clearTextField()
         findByText(pass).clearTextField()
     }
 
-    @Step
     fun clickSignInBtn() {
+        Allure.step("Нажать кнопку Sign In")
+
         signInBtn.click()
     }
 
-    @Step("Должен появиться алерт 'Login and password cannot be empty'")
     fun assertEmptyFieldAlertAppears() {
+        Allure.step("Должен появиться алерт 'Login and password cannot be empty'")
+
         emptyFieldAlert.waitUntilGone(1500)
     }
 
-    @Step("Должен появиться алерт 'Wrong login or password'")
     fun assertWrongCredentialsAlertAppears() {
+        Allure.step("Должен появиться алерт 'Wrong login or password'")
+
         wrongCredentialsAlert.waitUntilGone(1500)
     }
 
-    @Step
     fun signIn(login: String, pass: String): MainSection {
+        Allure.step("Залогиниться в приложении")
+
         enterLogin(login)
         enterPass(pass)
         clickSignInBtn()
