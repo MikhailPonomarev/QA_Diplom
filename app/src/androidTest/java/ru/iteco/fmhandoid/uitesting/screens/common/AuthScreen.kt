@@ -2,9 +2,7 @@ package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
 import io.qameta.allure.kotlin.Step
-import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
-import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
-import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
+import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
 class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
     private val screenTitle = findByText("Authorization")
@@ -16,17 +14,17 @@ class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
 
     @Step
     fun loadingScreenElementsShouldBeVisible() {
-        findByResId("splashscreen_image_view").exists()
-        findByResId("splash_screen_circular_progress_indicator").exists()
-        findByResId("splashscreen_text_view").exists()
+        assertViewIsVisible(findByResId("splashscreen_image_view"))
+        assertViewIsVisible(findByResId("splash_screen_circular_progress_indicator"))
+        assertViewIsVisible(findByResId("splashscreen_text_view"))
     }
 
     @Step
     fun assertIsSignInScreen() {
-        screenTitle.exists()
-        loginInput.exists()
-        passInput.exists()
-        signInBtn.exists()
+        assertViewIsVisible(screenTitle)
+        assertViewIsVisible(loginInput)
+        assertViewIsVisible(passInput)
+        assertViewIsVisible(signInBtn)
     }
 
     @Step
@@ -53,13 +51,11 @@ class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
 
     @Step("Должен появиться алерт 'Login and password cannot be empty'")
     fun assertEmptyFieldAlertAppears() {
-        emptyFieldAlert.exists()
         emptyFieldAlert.waitUntilGone(1500)
     }
 
     @Step("Должен появиться алерт 'Wrong login or password'")
     fun assertWrongCredentialsAlertAppears() {
-        wrongCredentialsAlert.exists()
         wrongCredentialsAlert.waitUntilGone(1500)
     }
 

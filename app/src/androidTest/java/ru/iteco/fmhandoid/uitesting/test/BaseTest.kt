@@ -42,7 +42,7 @@ open class BaseTest {
     }
 
     @After
-    fun afterEach() {
-//        AppBar(device).signOut()
+    open fun afterEach() {
+        AppBar(device).signOut()
     }
 }

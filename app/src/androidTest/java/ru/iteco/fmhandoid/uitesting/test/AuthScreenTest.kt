@@ -1,5 +1,6 @@
 package ru.iteco.fmhandoid.uitesting.test
 
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
@@ -15,6 +16,11 @@ class AuthScreenTest : BaseTest() {
     override fun beforeEach() {
         initUiDeviceAndAppBar()
         waitForPackage()
+    }
+
+    @After
+    override fun afterEach() {
+        //ignore
     }
 
     @Test

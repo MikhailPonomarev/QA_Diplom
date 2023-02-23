@@ -7,7 +7,7 @@ import ru.iteco.fmhandoid.uitesting.screens.common.Modal
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
-import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
+import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertEmptyFieldAlertIconIsVisible
 
 class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
     private val titleInput = findByResId("title_edit_text")
@@ -67,22 +67,22 @@ class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
     fun assertEmptyFieldAlertsAreVisible() {
         val alertIconId = "${baseId}text_input_end_icon"
 
-        CustomAssertions.assertEmptyFieldAlertIconIsVisible(
+        assertEmptyFieldAlertIconIsVisible(
             findByResId("title_text_input_layout"),
             alertIconId
         )
 
-        CustomAssertions.assertEmptyFieldAlertIconIsVisible(
+        assertEmptyFieldAlertIconIsVisible(
             findByResId("date_in_plan_text_input_layout"),
             alertIconId
         )
 
-        CustomAssertions.assertEmptyFieldAlertIconIsVisible(
+        assertEmptyFieldAlertIconIsVisible(
             findByResId("time_in_plan_text_input_layout"),
             alertIconId
         )
 
-        CustomAssertions.assertEmptyFieldAlertIconIsVisible(
+        assertEmptyFieldAlertIconIsVisible(
             findByResId("description_text_input_layout"),
             alertIconId
         )

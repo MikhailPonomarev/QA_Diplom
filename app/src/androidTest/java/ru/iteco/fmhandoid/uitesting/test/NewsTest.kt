@@ -7,8 +7,6 @@ import ru.iteco.fmhandoid.uitesting.testdata.NewsInfo
 
 class NewsTest : BaseTest() {
 
-    //TODO: refactoring - replace all exists() methods with custom assertion
-
     @Test
     fun createNewsOnCurrentDate() {
         val newsSectionBefore = appBar.openNewsSection()
@@ -80,7 +78,7 @@ class NewsTest : BaseTest() {
         val newsControlPanelAfter = newsCreateScreen.createNews(newsInfo)
         newsControlPanelAfter.assertCreatedNewsInfoInControlPanel(newsInfo)
 
-        val modal = newsControlPanelAfter.clickDeleteNews(newsInfo.newsTitle)
+        val modal = newsControlPanelAfter.clickDeleteNews()
         modal.assertModalText(
             "Are you sure you want to permanently delete the document? " +
                     "These changes cannot be reversed in the future."
@@ -136,6 +134,7 @@ class NewsTest : BaseTest() {
 
         newsCreateScreen.clickSaveBtn()
         newsCreateScreen.assertEmptyInputAlertsAreVisible()
+        device.pressBack()
     }
 
     @Test

@@ -10,26 +10,28 @@ import org.junit.Assert.assertTrue
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.screens.common.Modal
 import ru.iteco.fmhandoid.uitesting.testdata.NewsInfo
+import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
 class NewsSection(private val device: UiDevice) : BaseScreen(device) {
     private val controlPanelBtn = findByResId("edit_news_material_button")
     private val addNewsBtn = findByResId("add_news_image_view")
     private val newsRecyclerViewId = "${baseId}news_list_recycler_view"
+    private val newsCardViewId = "${baseId}news_item_material_card_view"
 
     @Step
     fun assertIsNewsSection() {
-        findByText("News").exists()
+        assertViewIsVisible(findByText("News"))
     }
 
     @Step
     fun assertIsControlPanel() {
-        findByText("Control panel").exists()
+        assertViewIsVisible(findByText("Control panel"))
     }
 
     @Step
     fun clickControlPanelBtn(): NewsSection {
         controlPanelBtn.click()
-        findByText("Control panel").exists()
+        assertViewIsVisible(findByText("Control panel"))
         return NewsSection(this.device)
     }
 
@@ -41,10 +43,17 @@ class NewsSection(private val device: UiDevice) : BaseScreen(device) {
 
     @Step
     fun assertCreatedNewsInfoInControlPanel(info: NewsInfo) {
-        findByText(info.newsTitle).click()
-        findByText(info.publicationDate).exists()
-        findByText(info.publicationDate).exists()
-        findByText(info.description).exists()
+        val parentNews =
+            UiCollection(UiSelector().resourceId(newsRecyclerViewId))
+                .getChildByInstance(
+                    UiSelector().resourceId("${baseId}news_item_material_card_view"),
+                    0
+                )
+        parentNews.getChild(findByText(info.newsTitle).selector).click()
+
+        assertViewIsVisible(parentNews.getChild(findByText(info.publicationDate).selector))
+        assertViewIsVisible(parentNews.getChild(findByText(info.publicationDate).selector))
+        assertViewIsVisible(parentNews.getChild(findByText(info.description).selector))
     }
 
     @Step
@@ -52,7 +61,7 @@ class NewsSection(private val device: UiDevice) : BaseScreen(device) {
         val exactEditBtn =
             UiCollection(UiSelector().resourceId(newsRecyclerViewId))
                 .getChildByInstance(
-                    UiSelector().resourceId("${baseId}news_item_material_card_view"),
+                    UiSelector().resourceId(newsCardViewId),
                     0
                 ).getChild(UiSelector().resourceId("${baseId}edit_news_item_image_view"))
         exactEditBtn.click()
@@ -64,18 +73,17 @@ class NewsSection(private val device: UiDevice) : BaseScreen(device) {
         device.findObject(
             UiSelector().resourceId("${baseId}view_news_item_image_view")
                 .fromParent(UiSelector().fromParent(UiSelector().text(info.newsTitle)))
-        )
-            .click()
-        assertTrue(findByText(info.publicationDate).exists())
-        assertTrue(findByText(info.description).exists())
+        ).click()
+        assertViewIsVisible(findByText(info.publicationDate))
+        assertViewIsVisible(findByText(info.description))
     }
 
     @Step
-    fun clickDeleteNews(newsTitle: String): Modal {
+    fun clickDeleteNews(): Modal {
         val exactDeleteBtn =
-            UiCollection(UiSelector().resourceId("${baseId}news_list_recycler_view"))
+            UiCollection(UiSelector().resourceId(newsRecyclerViewId))
                 .getChildByInstance(
-                    UiSelector().resourceId("${baseId}news_item_material_card_view"),
+                    UiSelector().resourceId(newsCardViewId),
                     0
                 ).getChild(UiSelector().resourceId("${baseId}delete_news_item_image_view"))
         exactDeleteBtn.click()

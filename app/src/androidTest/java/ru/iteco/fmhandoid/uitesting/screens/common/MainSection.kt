@@ -13,6 +13,7 @@ import ru.iteco.fmhandoid.uitesting.screens.news.NewsSection
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 import ru.iteco.fmhandoid.uitesting.testdata.NewsInfo
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
+import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
 class MainSection(private val device: UiDevice) : BaseScreen(device) {
     private val newsContainer = findByResId("container_list_news_include_on_fragment_main")
@@ -23,17 +24,19 @@ class MainSection(private val device: UiDevice) : BaseScreen(device) {
 
     @Step
     fun assertIsMainScreen() {
-        CustomAssertions.assertViewIsVisible(newsContainer)
-        CustomAssertions.assertViewIsVisible(claimsContainer)
+        assertViewIsVisible(newsContainer)
+        assertViewIsVisible(claimsContainer)
     }
 
     @Step
     fun assertCreatedNewsInMainSection(info: NewsInfo) {
-        device.findObject(UiSelector().resourceId("${baseId}view_news_item_image_view")
-            .fromParent(UiSelector().fromParent(UiSelector().text(info.newsTitle))))
+        device.findObject(
+            UiSelector().resourceId("${baseId}view_news_item_image_view")
+                .fromParent(UiSelector().fromParent(UiSelector().text(info.newsTitle)))
+        )
             .click()
-        Assert.assertTrue(findByText(info.publicationDate).exists())
-        Assert.assertTrue(findByText(info.description).exists())
+        assertViewIsVisible(findByText(info.publicationDate))
+        assertViewIsVisible(findByText(info.description))
     }
 
     @Step
@@ -56,10 +59,36 @@ class MainSection(private val device: UiDevice) : BaseScreen(device) {
     }
 
     @Step
-    fun assertCreatedClaimOnMainScreen(info: ClaimInfo) {
-        findByText(info.title).exists()
-        findByText(info.planDate).exists()
-        findByText(info.time).exists()
+    fun assertCreatedClaimOnMainScreen(info: ClaimInfo, isExecutorAssigned: Boolean) {
+        val parentClaim = UiCollection(
+            UiSelector().resourceId("${baseId}claim_list_recycler_view")
+        ).getChildByInstance(UiSelector().resourceId("${baseId}claim_list_card"), 0)
+
+        assertViewIsVisible(
+            parentClaim.getChild(
+                findByText(info.title).selector
+            )
+        )
+
+        if (isExecutorAssigned) {
+            assertViewIsVisible(
+                parentClaim.getChild(
+                    findByText(info.executor).selector
+                )
+            )
+        }
+
+        assertViewIsVisible(
+            parentClaim.getChild(
+                findByText(info.planDate).selector
+            )
+        )
+
+        assertViewIsVisible(
+            parentClaim.getChild(
+                findByText(info.time).selector
+            )
+        )
     }
 
     @Step

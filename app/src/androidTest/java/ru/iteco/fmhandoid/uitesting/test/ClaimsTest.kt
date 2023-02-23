@@ -40,7 +40,10 @@ class ClaimsTest : BaseTest() {
 
         val mainSectionAfterCreateFirstClaim = appBar.openMainSection()
         mainSectionAfterCreateFirstClaim.assertIsMainScreen()
-        mainSectionAfterCreateFirstClaim.assertCreatedClaimOnMainScreen(firstClaimInfo)
+        mainSectionAfterCreateFirstClaim.assertCreatedClaimOnMainScreen(
+            firstClaimInfo,
+            true
+        )
 
         val createdClaimScreenFromMainSection =
             mainSectionAfterCreateFirstClaim.openExactClaim(firstClaimInfo.title)
@@ -79,7 +82,7 @@ class ClaimsTest : BaseTest() {
             false
         )
         mainSectionAfter.assertIsMainScreen()
-        mainSectionAfter.assertCreatedClaimOnMainScreen(claimInfo)
+        mainSectionAfter.assertCreatedClaimOnMainScreen(claimInfo, false)
 
         val createdClaimScreen = mainSectionAfter.openExactClaim(claimInfo.title)
         createdClaimScreen.assertCreatedClaimInfo(claimInfo, false)
