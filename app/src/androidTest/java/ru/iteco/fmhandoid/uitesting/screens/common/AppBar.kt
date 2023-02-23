@@ -2,8 +2,9 @@ package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
 import io.qameta.allure.kotlin.Step
-import ru.iteco.fmhandoid.uitesting.screens.*
+import ru.iteco.fmhandoid.uitesting.screens.about.AboutScreen
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
+import ru.iteco.fmhandoid.uitesting.screens.loveisall.LoveIsAllScreen
 import ru.iteco.fmhandoid.uitesting.screens.news.NewsSection
 
 open class AppBar(private val device: UiDevice) : BaseScreen(device) {
@@ -34,7 +35,7 @@ open class AppBar(private val device: UiDevice) : BaseScreen(device) {
     }
 
     @Step
-    fun openAboutSection(): AboutScreen {
+    fun openAboutScreen(): AboutScreen {
         appMenuBtn.click()
         findByText("About").click()
         return AboutScreen(this.device)
