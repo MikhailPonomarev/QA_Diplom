@@ -1,12 +1,15 @@
 package ru.iteco.fmhandoid.uitesting.test
 
+import io.qameta.allure.android.runners.AllureAndroidJUnit4
 import io.qameta.allure.kotlin.junit4.DisplayName
 import org.junit.Test
+import org.junit.runner.RunWith
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
 import ru.iteco.fmhandoid.uitesting.screens.common.Modal
 import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 
+@RunWith(AllureAndroidJUnit4::class)
 class ClaimsTest : BaseTest() {
     private val openStatus = "Open"
     private val inProgressStatus = "In progress"

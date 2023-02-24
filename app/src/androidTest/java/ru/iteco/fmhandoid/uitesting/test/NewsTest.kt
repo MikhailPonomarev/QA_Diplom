@@ -1,11 +1,14 @@
 package ru.iteco.fmhandoid.uitesting.test
 
+import io.qameta.allure.android.runners.AllureAndroidJUnit4
 import io.qameta.allure.kotlin.junit4.DisplayName
 import org.junit.Test
+import org.junit.runner.RunWith
 import ru.iteco.fmhandoid.uitesting.screens.news.NewsSection
 import ru.iteco.fmhandoid.uitesting.testdata.DataHelper
 import ru.iteco.fmhandoid.uitesting.testdata.NewsInfo
 
+@RunWith(AllureAndroidJUnit4::class)
 class NewsTest : BaseTest() {
 
     @Test

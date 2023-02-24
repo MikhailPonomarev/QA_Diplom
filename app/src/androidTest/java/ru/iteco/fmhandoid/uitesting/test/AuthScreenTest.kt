@@ -1,12 +1,15 @@
 package ru.iteco.fmhandoid.uitesting.test
 
+import io.qameta.allure.android.runners.AllureAndroidJUnit4
 import io.qameta.allure.kotlin.junit4.DisplayName
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 import ru.iteco.fmhandoid.uitesting.screens.common.AuthScreen
 
+@RunWith(AllureAndroidJUnit4::class)
 class AuthScreenTest : BaseTest() {
     private val validLogin = Constants.VALID_LOGIN
     private val validPass = Constants.VALID_PASS
