@@ -1,11 +1,10 @@
-package ru.iteco.fmhandoid.uitesting.screens.loveisall
+package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiCollection
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import io.qameta.allure.kotlin.Allure
 import org.junit.Assert.assertEquals
-import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
 class LoveIsAllScreen(private val device: UiDevice) : BaseScreen(device) {

@@ -6,12 +6,12 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
-import io.qameta.allure.android.runners.AllureAndroidJUnit4
-import org.junit.After
 import org.junit.Before
-import org.junit.runner.RunWith
+import ru.iteco.fmhandoid.uitesting.screens.common.AboutScreen
+import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimCreateEditScreen
 import ru.iteco.fmhandoid.uitesting.screens.common.AppBar
 import ru.iteco.fmhandoid.uitesting.screens.common.AuthScreen
+import ru.iteco.fmhandoid.uitesting.screens.news.NewsCreateEditScreen
 import ru.iteco.fmhandoid.uitesting.testdata.Constants
 
 open class BaseTest {
@@ -36,12 +36,35 @@ open class BaseTest {
     open fun beforeEach() {
         initUiDeviceAndAppBar()
         waitForPackage()
-        AuthScreen(device).signIn(Constants.VALID_LOGIN, Constants.VALID_PASS)
-        appBar = AppBar(device)
+        signInIfNotAuthorized()
+        setScreenState()
     }
 
-    @After
-    open fun afterEach() {
-        AppBar(device).signOut()
+    private fun signInIfNotAuthorized() {
+        val authScreen = AuthScreen(device)
+        if (authScreen.getScreenTitle().waitForExists(timeout)) {
+            authScreen.signIn(Constants.VALID_LOGIN, Constants.VALID_PASS)
+        }
+    }
+
+    private fun setScreenState() {
+        val claimCreateEditScreen = ClaimCreateEditScreen(device)
+        if (claimCreateEditScreen.getCreatingTitle().exists() ||
+            claimCreateEditScreen.getEditingTitle().exists()
+        ) {
+            device.pressBack()
+        }
+
+        val newsCreateEditScreen = NewsCreateEditScreen(device)
+        if (newsCreateEditScreen.getCreatingTitle().exists() ||
+            newsCreateEditScreen.getEditingTitle().exists()
+        ) {
+            device.pressBack()
+        }
+
+        val aboutScreen = AboutScreen(device)
+        if (aboutScreen.getVersionTitle().exists()) {
+            aboutScreen.clickBackBtn()
+        }
     }
 }

@@ -1,6 +1,7 @@
 package ru.iteco.fmhandoid.uitesting.screens.claims
 
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
 import io.qameta.allure.kotlin.Allure
 import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
 import ru.iteco.fmhandoid.uitesting.screens.common.Modal
@@ -10,6 +11,8 @@ import ru.iteco.fmhandoid.uitesting.testdata.ClaimInfo
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertEmptyFieldAlertIconIsVisible
 
 class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
+    private val creatingTitle = findByText("Creating")
+    private val editingTitle = findByText("Editing")
     private val titleInput = findByResId("title_edit_text")
     private val executorInput = findByResId("executor_drop_menu_auto_complete_text_view")
     private val dateInput = findByResId("date_in_plan_text_input_edit_text")
@@ -17,6 +20,10 @@ class ClaimCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
     private val descriptionInput = findByResId("description_edit_text")
     private val saveBtn = findByResId("save_button")
     private val cancelBtn = findByResId("cancel_button")
+
+    fun getCreatingTitle(): UiObject = creatingTitle
+
+    fun getEditingTitle(): UiObject = editingTitle
 
     fun createClaimFromClaimsSection(info: ClaimInfo, isWithExecutor: Boolean): ClaimsSection {
         Allure.step("Создать претензию в разделе Claims")

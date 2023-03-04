@@ -1,10 +1,9 @@
-package ru.iteco.fmhandoid.uitesting.screens.about
+package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
 import io.qameta.allure.kotlin.Allure
 import org.junit.Assert.assertEquals
-import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
-import ru.iteco.fmhandoid.uitesting.screens.common.MainSection
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
 class AboutScreen(private val device: UiDevice) : BaseScreen(device)  {
@@ -14,6 +13,8 @@ class AboutScreen(private val device: UiDevice) : BaseScreen(device)  {
     private val privacyPolicyLink = findByResId("about_privacy_policy_value_text_view")
     private val thermsOfUseLink = findByResId("about_terms_of_use_value_text_view")
     private val chromePackage = "com.android.chrome"
+
+    fun getVersionTitle(): UiObject = versionTitle
 
     fun clickBackBtn(): MainSection {
         Allure.step("Нажать кнопку \"Назад\"")

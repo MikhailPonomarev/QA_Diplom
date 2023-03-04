@@ -1,6 +1,7 @@
 package ru.iteco.fmhandoid.uitesting.screens.news
 
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
 import io.qameta.allure.kotlin.Allure
 import org.junit.Assert.assertEquals
 import ru.iteco.fmhandoid.uitesting.screens.common.BaseScreen
@@ -11,6 +12,9 @@ import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
 class NewsCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
+    private val creatingTitle = findByText("Creating")
+    private val editingTitle = findByText("Editing")
+    private val subTitle = findByText("News")
     private val categoryInput = findByResId("news_item_category_text_auto_complete_text_view")
     private val titleInput = findByResId("news_item_title_text_input_edit_text")
     private val publicationDateInput = findByResId("news_item_publish_date_text_input_edit_text")
@@ -20,18 +24,22 @@ class NewsCreateEditScreen(private val device: UiDevice) : BaseScreen(device) {
     private val saveBtn = findByResId("save_button")
     private val cancelBtn = findByResId("cancel_button")
 
+    fun getCreatingTitle(): UiObject = creatingTitle
+
+    fun getEditingTitle(): UiObject = editingTitle
+
     fun assertIsCreatingNewsScreen() {
         Allure.step("Должен быть открыт экран Creating News")
 
-        assertViewIsVisible(findByText("Creating"))
-        assertViewIsVisible(findByText("News"))
+        assertViewIsVisible(creatingTitle)
+        assertViewIsVisible(subTitle)
     }
 
     fun assertIsEditingNewsScreen() {
         Allure.step("Должен быть открыт экран Editing News")
 
-        assertViewIsVisible(findByText("Editing"))
-        assertViewIsVisible(findByText("News"))
+        assertViewIsVisible(editingTitle)
+        assertViewIsVisible(subTitle)
     }
 
     fun createNews(info: NewsInfo): NewsSection {

@@ -1,10 +1,9 @@
 package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
 import io.qameta.allure.kotlin.Allure
-import ru.iteco.fmhandoid.uitesting.screens.about.AboutScreen
 import ru.iteco.fmhandoid.uitesting.screens.claims.ClaimsSection
-import ru.iteco.fmhandoid.uitesting.screens.loveisall.LoveIsAllScreen
 import ru.iteco.fmhandoid.uitesting.screens.news.NewsSection
 
 open class AppBar(private val device: UiDevice) : BaseScreen(device) {
@@ -12,6 +11,8 @@ open class AppBar(private val device: UiDevice) : BaseScreen(device) {
     private val loveIsAllScreenBtn = findByResId("our_mission_image_button")
     private val accountMenuBtn = findByResId("authorization_image_button")
     private val logoutOption = findByText("Log out")
+
+    fun getAppMenuBtn(): UiObject = appMenuBtn
 
     fun openMainSection(): MainSection {
         Allure.step("Открыть раздел Main")

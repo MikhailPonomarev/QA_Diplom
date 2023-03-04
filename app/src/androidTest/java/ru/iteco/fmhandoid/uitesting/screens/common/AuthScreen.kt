@@ -1,6 +1,7 @@
 package ru.iteco.fmhandoid.uitesting.screens.common
 
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
 import io.qameta.allure.kotlin.Allure
 import ru.iteco.fmhandoid.uitesting.utils.CustomAssertions.Companion.assertViewIsVisible
 
@@ -11,6 +12,8 @@ class AuthScreen(private val device: UiDevice) : BaseScreen(device) {
     private val signInBtn = findByResId("enter_button")
     private val emptyFieldAlert = findByText("Login and password cannot be empty")
     private val wrongCredentialsAlert = findByText("Wrong login or password")
+
+    fun getScreenTitle(): UiObject = screenTitle
 
     fun loadingScreenElementsShouldBeVisible() {
         Allure.step("Должны отображаться элементы загрузочного экрана")

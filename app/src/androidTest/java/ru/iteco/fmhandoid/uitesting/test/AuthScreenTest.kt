@@ -2,7 +2,6 @@ package ru.iteco.fmhandoid.uitesting.test
 
 import io.qameta.allure.android.runners.AllureAndroidJUnit4
 import io.qameta.allure.kotlin.junit4.DisplayName
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,48 +19,46 @@ class AuthScreenTest : BaseTest() {
     override fun beforeEach() {
         initUiDeviceAndAppBar()
         waitForPackage()
-    }
-
-    @After
-    override fun afterEach() {
-        //ignore
+        AuthScreen(device).loadingScreenElementsShouldBeVisible()
+        if (appBar.getAppMenuBtn().waitForExists(10000)) {
+            appBar.signOut()
+        }
     }
 
     @Test
     @DisplayName("Авторизация с валидными данными и выход из аккаунта")
     fun shouldSignInAndSignOut() {
-        AuthScreen(device).loadingScreenElementsShouldBeVisible()
-
         val mainScreen = AuthScreen(device).signIn(validLogin, validPass)
         mainScreen.assertIsMainScreen()
 
-        val signInScreen = appBar.signOut()
-        signInScreen.assertIsSignInScreen()
+        val authScreen = appBar.signOut()
+        authScreen.assertIsSignInScreen()
     }
 
     @Test
     @DisplayName("Авторизация с невалидными и пустыми данными")
     fun signInWithFalseCredentials() {
-        val signInScreen = AuthScreen(device)
-        signInScreen.loadingScreenElementsShouldBeVisible()
+        val authScreen = AuthScreen(device)
 
-        signInScreen.enterLogin(falseLogin)
-        signInScreen.enterPass(falsePass)
-        signInScreen.clickSignInBtn()
-        signInScreen.assertWrongCredentialsAlertAppears()
-        signInScreen.clearInputFields(falseLogin, falsePass)
+        authScreen.enterLogin(falseLogin)
+        authScreen.enterPass(falsePass)
+        authScreen.clickSignInBtn()
+        authScreen.assertWrongCredentialsAlertAppears()
+        authScreen.clearInputFields(falseLogin, falsePass)
 
-        signInScreen.enterLogin(falseLogin)
-        signInScreen.enterPass(validPass)
-        signInScreen.assertWrongCredentialsAlertAppears()
-        signInScreen.clearInputFields(falseLogin, validPass)
+        authScreen.enterLogin(falseLogin)
+        authScreen.enterPass(validPass)
+        authScreen.clickSignInBtn()
+        authScreen.assertWrongCredentialsAlertAppears()
+        authScreen.clearInputFields(falseLogin, validPass)
 
-        signInScreen.enterLogin(validLogin)
-        signInScreen.enterPass(falsePass)
-        signInScreen.assertWrongCredentialsAlertAppears()
-        signInScreen.clearInputFields(validLogin, falsePass)
+        authScreen.enterLogin(validLogin)
+        authScreen.enterPass(falsePass)
+        authScreen.clickSignInBtn()
+        authScreen.assertWrongCredentialsAlertAppears()
+        authScreen.clearInputFields(validLogin, falsePass)
 
-        signInScreen.clickSignInBtn()
-        signInScreen.assertEmptyFieldAlertAppears()
+        authScreen.clickSignInBtn()
+        authScreen.assertEmptyFieldAlertAppears()
     }
 }
